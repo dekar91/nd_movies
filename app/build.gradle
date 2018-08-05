@@ -9,9 +9,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "MOVIE_DB_API_KEY", MOVIE_DB_API_KEY
 
-        def STRING = "String"
-        buildConfigField STRING, "MOVIE_DB_API_KEY", "\"${MOVIE_DB_API_KEY}\""
     }
     buildTypes {
         release {
@@ -30,5 +29,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2', 'com.synnapps:carouselview:0.1.5'
 }
