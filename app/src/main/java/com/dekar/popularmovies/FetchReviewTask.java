@@ -29,6 +29,12 @@ public class FetchReviewTask extends AsyncTask<DetailActivityFragment.ReviewTask
         this.rootView = rootView;
     }
 
+    private String getMovieDbKey()
+    {
+        return BuildConfig.MOVIE_DB_API_KEY;
+    }
+
+
     @Override
     protected ArrayList<String> doInBackground(DetailActivityFragment.ReviewTaskParams... params) {
 
@@ -48,7 +54,7 @@ public class FetchReviewTask extends AsyncTask<DetailActivityFragment.ReviewTask
             // http://openweathermap.org/API#forecast
             //
             //http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=[YOUR API KEY]
-            URL url = new URL("http://api.themoviedb.org/3/movie/"+movieID+"/reviews?api_key=" + "ff");
+            URL url = new URL("http://api.themoviedb.org/3/movie/"+movieID+"/reviews?api_key=" + getMovieDbKey());
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();

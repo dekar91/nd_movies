@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -158,16 +159,16 @@ public class DetailActivityFragment extends Fragment {
 
 
 
-        final Button button = (Button) rootView.findViewById(R.id.button);
+        final FloatingActionButton button = rootView.findViewById(R.id.button);
 
         if (checkFavouriteByID(selectedMovie.id)) {
             // Log.e("onCreateView", "TRUE");
-            button.setText("Unmark as favourite");
+            button.setBackgroundColor(125);
         }
         else
         {
             //Log.e("onCreateView", "FALSE");
-            button.setText("Mark as favourite");
+            button.setBackgroundColor(255);
         }
 
 
@@ -187,7 +188,7 @@ public class DetailActivityFragment extends Fragment {
                     editor.commit();
 
                     Toast.makeText(getContext(), "Unmarked as favourite!", Toast.LENGTH_SHORT).show();
-                    button.setText("Mark as favourite");
+//                    button.setText("Mark as favourite");
 
                 } else {
                     //SharedPreferences sp = getContext().getSharedPreferences("pref_general", Context.MODE_PRIVATE);
@@ -200,7 +201,7 @@ public class DetailActivityFragment extends Fragment {
                     editor.commit();
 
                     Toast.makeText(getContext(), "Marked as favourite!", Toast.LENGTH_SHORT).show();
-                    button.setText("Unmark as favourite");
+//                    button.setText("Unmark as favourite");
                 }
 
             }
