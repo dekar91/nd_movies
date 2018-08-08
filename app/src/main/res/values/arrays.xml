@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_order_values">
+    <item name="pref_order_popularity_value">@string/pref_order_popularity</item>
+    <item name="pref_order_rate_value">@string/pref_order_rate</item>
+    <item name="pref_order_favourite_value">@string/pref_order_favourite</item>
+    </array>
+
+    <array name="pref_order_labels">
+        <item name="pref_order_popularity_label">@string/pref_order_label_popularity</item>
+        <item name="pref_order_rate_label">@string/pref_order_label_rate</item>
+        <item name="pref_order_favourite_label">@string/pref_order_label_favourite</item>
+    </array>
+</resources>

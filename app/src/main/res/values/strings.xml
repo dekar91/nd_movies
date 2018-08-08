@@ -6,14 +6,16 @@
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="pref_order_key">popularity.desc</string>
-    <string name="pref_order_label">Sort Order</string>
-    <string name="pref_order_label_popularity">Ordered by Popularity</string>
-    <string name="pref_order_label_rate">Ordered by Rate</string>
-    <string name="pref_order_label_favourite">Favourites Only</string>
-    <string name="pref_order_popularity">popularity.desc</string>
-    <string name="pref_order_rate">vote_average.desc</string>
-    <string name="pref_order_favourite">favourite</string>
-    <string name="title_activity_test">Back</string>
-    <string name="apikey">2851e6750aef05c0da1c13d82f597926</string>
+    <string name="pref_order_key">order</string>
+    
+    <string name="pref_order_label" translatable="false">order Order</string>
+    <string name="pref_order_label_popularity" translatable="false">Ordered by Popularity</string>
+    <string name="pref_order_label_rate" translatable="false">Ordered by Rate</string>
+    <string name="pref_order_label_favourite" translatable="false">Favourites Only</string>
+    
+    <string name="pref_order_popularity" translatable="false">popularity.desc</string>
+        <string name="pref_order_rate" translatable="false">vote_average.desc</string>
+    <string name="pref_order_favourite" translatable="false">favourite</string>
+    <string name="pref_list_name" translatable="false">Order</string>
+
 </resources>
