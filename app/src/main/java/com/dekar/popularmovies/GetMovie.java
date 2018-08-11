@@ -9,15 +9,38 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class GetMovie extends AsyncTask<URL, Void, String> {
+public class GetMovie extends AsyncTask<String, Void, String> {
+
     @Override
-    protected String doInBackground(URL... urls) {
-        String result = this.getMovie();
-        return result;
+    protected String doInBackground(String ...orders) {
+        return this.getMovie(orders[0]);
     }
 
-    private URL buildUrl() {
-        String urlString = "https://api.themoviedb.org/3/movie/550?api_key=d95e80a4df2194278367f995c9355a83";
+
+    private String getMovieDbKey()
+    {
+        return BuildConfig.MOVIE_DB_API_KEY;
+    }
+
+    private URL buildUrl(String order) {
+        
+        String urlString = "https://api.themoviedb.org/3/movie/";
+
+        switch (order)
+        {
+            case "vote_average":
+                urlString += "top_rated";
+                break;
+            case "favorite":
+                urlString += "top_rated";
+                break;
+            case "popularity.desc":
+                default:
+                    urlString += "top_rated";
+                    break;
+        }
+        
+       urlString += "?api_key=" + getMovieDbKey();
         Uri buildUri = Uri.parse(urlString);
 
         URL url = null;
@@ -38,8 +61,9 @@ public class GetMovie extends AsyncTask<URL, Void, String> {
         }
     }
 
-    private String getMovie() {
-        URL url = this.buildUrl();
+    private String getMovie(String order) {
+
+        URL url = this.buildUrl(order);
 
         try {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

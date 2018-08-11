@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,25 +19,35 @@ import android.widget.GridView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
-/**
- * Created by guo7711 on 10/15/2015.
- */
-public class PosterFragment extends Fragment {
+
+public class PosterFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     private PosterAdapter posterAdapter;
     private View rootView;
     ArrayList<Movie> movies = new ArrayList<>();
 
 
-    public PosterFragment() {
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this.getActivity()).unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if(s.equals(getString(R.string.pref_order_key)))
+        {
+            updateMovies(rootView, posterAdapter);
+        }
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        PreferenceManager.getDefaultSharedPreferences(this.getActivity()).registerOnSharedPreferenceChangeListener(this);
+
     }
 
     @Override

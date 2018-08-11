@@ -8,9 +8,9 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="pref_order_key">order</string>
     
-    <string name="pref_order_label" translatable="false">order Order</string>
-    <string name="pref_order_label_popularity" translatable="false">Ordered by Popularity</string>
-    <string name="pref_order_label_rate" translatable="false">Ordered by Rate</string>
+    <string name="pref_order_label" >order Order</string>
+    <string name="pref_order_label_popularity" >Ordered by Popularity</string>
+    <string name="pref_order_label_rate" >Ordered by Rate</string>
     <string name="pref_order_label_favourite" translatable="false">Favourites Only</string>
     
     <string name="pref_order_popularity" translatable="false">popularity.desc</string>

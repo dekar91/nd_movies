@@ -14,9 +14,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by guo7711 on 1/19/2016.
- */
 public class FetchReviewTask extends AsyncTask<DetailActivityFragment.ReviewTaskParams, Void, ArrayList<String>> {
     private Context mContext;
     private View rootView;

@@ -1,23 +1,42 @@
 package com.dekar.popularmovies;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+
+    private String order = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupPreferences();
+        new GetMovie().execute(order);
 
-        new GetMovie().execute();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    public void setupPreferences()
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        this.order = sharedPreferences.getString(getString(R.string.pref_order_key), getString(R.string.pref_order_popularity));
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+
+
     }
 
     @Override
@@ -42,5 +61,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if(s.equals(getString(R.string.pref_order_key)))
+        {
+            new GetMovie().execute(sharedPreferences.getString(s, getResources().getString(R.string.pref_order_key)));
+        }
+
     }
 }

@@ -3,9 +3,6 @@ package com.dekar.popularmovies;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by guo7711 on 1/7/2016.
- */
 public class Trailer implements Parcelable {
 
     String name;

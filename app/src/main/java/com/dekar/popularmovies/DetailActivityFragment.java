@@ -100,11 +100,12 @@ public class DetailActivityFragment extends Fragment {
 
             //update UI
             if (selectedMovie != null) {
+                getActivity().setTitle(selectedMovie.title);
                 detailViewHolder.titleTextView.setText(selectedMovie.title);
                 detailViewHolder.releasedateTextView.setText(selectedMovie.release_date);
                 detailViewHolder.voteTextView.setText(String.valueOf(selectedMovie.vote_average + "/10"));
                 detailViewHolder.overViewTextView.setText(selectedMovie.overview);
-                Picasso.with(this.getContext()).load("http://image.tmdb.org/t/p/w185/"+ selectedMovie.posterURL).into(detailViewHolder.imageView);
+                Picasso.with(this.getContext()).load(selectedMovie.posterURL).into(detailViewHolder.imageView);
             }
 
             //review
@@ -140,6 +141,8 @@ public class DetailActivityFragment extends Fragment {
                 String selectedMovieID = selectedMovie.id;
 
                 if (selectedMovie != null) {
+                    getActivity().setTitle(selectedMovie.title);
+
                     detailViewHolder.titleTextView.setText(selectedMovie.title);
                     detailViewHolder.releasedateTextView.setText(selectedMovie.release_date);
                     detailViewHolder.voteTextView.setText(String.valueOf(selectedMovie.vote_average + "/10"));

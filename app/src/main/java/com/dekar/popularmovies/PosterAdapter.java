@@ -13,9 +13,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-/**
- * Created by guo7711 on 10/15/2015.
- */
 public class PosterAdapter extends BaseAdapter {
 
     private Context mContext;
@@ -58,12 +55,6 @@ public class PosterAdapter extends BaseAdapter {
             holder.imageView.setLayoutParams(new GridView.LayoutParams(540, 810));
             holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             holder.imageView.setPadding(0, 0, 0, 0);
-
-            /*
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(540, 810));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(0, 0, 0, 0);*/
         } else {
             holder.imageView = (ImageView) convertView;
         }

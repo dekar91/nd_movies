@@ -12,9 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by guo7711 on 1/19/2016.
- */
 public class TrailerAdapter extends BaseAdapter {
 
     private Context mContext;

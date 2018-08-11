@@ -4,9 +4,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by guo7711 on 1/19/2016.
- */
 public class DetailViewHolder {
 
     private View rootView;
@@ -30,7 +27,7 @@ public class DetailViewHolder {
     }
 
     DetailViewHolder(){
-        
+
     }
 
 

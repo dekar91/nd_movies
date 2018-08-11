@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by guo7711 on 1/4/2016.
- */
 public class ReviewAdapter extends BaseAdapter {
 
     private Context mContext;

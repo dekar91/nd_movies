@@ -50,7 +50,7 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         String responseJsonStr = null;
         String order_by = params[0];
 
-        if (order_by.equals("favourite")) {
+        if (order_by.equals("favofurite")) {
 
             movies = new ArrayList<>();
             SharedPreferences sp = mContext.getSharedPreferences("pref_general", Context.MODE_PRIVATE);

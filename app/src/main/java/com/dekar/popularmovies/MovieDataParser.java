@@ -6,9 +6,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by guo7711 on 12/10/2015.
- */
 public class MovieDataParser {
 
 
