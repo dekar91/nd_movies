@@ -1,11 +1,8 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="action_settings">Settings</string>
-    <string name="description_placeholder">Description placeholder</string>
     <string name="title_activity">Film Title</string>
     <string name="action_refresh">Refresh</string>
-    <string name="title_activity_detail">DetailActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
     <string name="pref_order_key">order</string>
     
     <string name="pref_order_label" >order Order</string>
@@ -17,5 +14,13 @@
         <string name="pref_order_rate" translatable="false">vote_average.desc</string>
     <string name="pref_order_favourite" translatable="false">favourite</string>
     <string name="pref_list_name" translatable="false">Order</string>
+
+    <string name="release_date_label">Released</string>
+    <string name="votes_label">Votes</string>
+    <string name="trailers_label">Trailers</string>
+    <string name="overviews_label">Overview</string>
+    <string name="reviews_label">Reviews:</string>
+    <string name="title_label">Title</string>
+
 
 </resources>

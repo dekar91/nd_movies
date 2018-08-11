@@ -45,36 +45,11 @@ public class TrailerAdapter extends BaseAdapter {
 
     public View createTrailer(final int position)
     {
-        /*TextView textView;
-        textView = new TextView(mContext);
-        textView.setClickable(true);
-        //textView.setLayoutParams(new GridView.LayoutParams(540, 200));
-        //textView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        textView.setPadding(0, 0, 0, 0);
-        textView.setTextSize(18);
-
-        textView.setText(trailers.get(position).name);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + trailers.get(position).key));
-               if (mContext!=null) {
-                  // mContext.startActivity(intent);
-                  mContext.startActivity(Intent.createChooser(intent, "Choose an App"));
-               }
-               else Log.e("createTrailer", "mContext is null");
-            }
-        });
-        // Log.e("getView", String.valueOf(position));
-        return textView;*/
-
         DetailViewHolder holder = new DetailViewHolder();
         holder.trailerTextView = new TextView(mContext);
         holder.trailerTextView.setClickable(true);
-        //textView.setLayoutParams(new GridView.LayoutParams(540, 200));
-        //textView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         holder.trailerTextView.setPadding(0, 0, 0, 0);
-        holder.trailerTextView.setTextSize(18);
+        holder.trailerTextView.setTextSize(16);
 
         holder.trailerTextView.setText(trailers.get(position).name);
         holder.trailerTextView.setOnClickListener(new View.OnClickListener() {
@@ -82,13 +57,12 @@ public class TrailerAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + trailers.get(position).key));
                 if (mContext!=null) {
-                    // mContext.startActivity(intent);
                     mContext.startActivity(Intent.createChooser(intent, "Choose an App"));
                 }
                 else Log.e("createTrailer", "mContext is null");
             }
         });
-        // Log.e("getView", String.valueOf(position));
+
         return holder.trailerTextView;
 
     }
@@ -97,17 +71,12 @@ public class TrailerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView textView;
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
             textView = new TextView(mContext);
-            //textView.setLayoutParams(new GridView.LayoutParams(540, 200));
-            //textView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             textView.setPadding(0, 0, 0, 0);
         } else {
             textView = (TextView) convertView;
         }
 
-        //textView.setText(trailers.get(position).name);
-        // Log.e("getView", String.valueOf(position));
         return textView;
 
     }

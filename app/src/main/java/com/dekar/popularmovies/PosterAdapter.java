@@ -60,8 +60,6 @@ public class PosterAdapter extends BaseAdapter {
         }
 
         Picasso.with(mContext).load(movies.get(position).posterURL).into(holder.imageView);
-        //Picasso.with(mContext).load(movies.get(position).posterURL).into(imageView);
-        //Log.e("PosterAdapter",String.valueOf(movies.size()));
         return holder.imageView;
 
 

@@ -43,11 +43,6 @@ public class FetchTrailerTask extends AsyncTask<DetailActivityFragment.TrailerTa
         trailerAdapter = params[0].reviewTrailerAdapter;
 
         try {
-            // Construct the URL for the OpenWeatherMap query
-            // Possible parameters are avaiable at OWM's forecast API page, at
-            // http://openweathermap.org/API#forecast
-            //
-            //http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=[YOUR API KEY]
             URL url = new URL("http://api.themoviedb.org/3/movie/"+movieID+"/videos?api_key=" + getMovieDbKey());
 
             // Create the request to OpenWeatherMap, and open the connection
