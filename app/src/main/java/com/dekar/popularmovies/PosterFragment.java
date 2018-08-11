@@ -53,7 +53,7 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        outState.putParcelableArrayList("movie", movies);
+        outState.putParcelableArrayList("movies", movies);
         super.onSaveInstanceState(outState);
     }
 
@@ -95,35 +95,7 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
             toast.show();
         }
         else {
-
-            if (savedInstanceState != null) {
-                movies = savedInstanceState.getParcelableArrayList("movie");
-
-                // update UI
-                posterAdapter.setMovies(movies);
-                posterAdapter.notifyDataSetChanged();
-
-                if (movies != null) {
-                    GridView gridView = (GridView) rootView.findViewById(R.id.movie_grid);
-                    gridView.setAdapter(posterAdapter);
-
-                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View v,
-                                                int position, long id) {
-                            // Toast.makeText(getActivity(), "" + position,
-                            //       Toast.LENGTH_SHORT).show();
-                            String selectedMovieID = (movies.get(position)).id;
-                            Intent intent = new Intent(getActivity(), DetailActivity.class);
-                            intent.putExtra("movie", movies.get(position));
-                            startActivity(intent);
-
-                        }
-                    });
-
-                }
-            } else {
                 updateMovies(rootView, posterAdapter);
-            }
         }
 
 

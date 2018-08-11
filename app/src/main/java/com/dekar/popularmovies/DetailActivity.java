@@ -49,42 +49,4 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void closeOnError() {
-//        finish();
-//        Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
-//    }
-//
-//    private void populateUI(Sandwich sandwich) {
-//
-//        if(sandwich.getPlaceOfOrigin().length() == 0) {
-//            mBinding.originTv.setText(R.string.data_unavailable);
-//
-//        } else {
-//            mBinding.originTv.setText(sandwich.getPlaceOfOrigin());
-//        }
-//
-//        if(sandwich.getDescription().length() == 0) {
-//            mBinding.descriptionTv.setText(R.string.data_unavailable);
-//
-//        } else {
-//            mBinding.descriptionTv.setText(sandwich.getDescription());
-//        }
-//
-//        if(sandwich.getAlsoKnownAs().size() == 0) {
-//            mBinding.alsoKnownTv.setText(R.string.data_unavailable);
-//
-//        } else {
-//            mBinding.alsoKnownTv.setText(JsonUtils.implode(", ", sandwich.getAlsoKnownAs()));
-//        }
-//
-//
-//        if(sandwich.getIngredients().size() == 0) {
-//            mBinding.ingredientsTv.setText(R.string.data_unavailable);
-//        } else {
-//            mBinding.ingredientsTv.setText(JsonUtils.implode(", ", sandwich.getIngredients()));
-//
-//        }
-//
-//
-//    }
 }
