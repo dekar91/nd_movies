@@ -5,8 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v4.view.ViewGroupCompat;
+import android.transition.Scene;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
@@ -50,6 +54,8 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         String responseJsonStr = null;
         String order_by = params[0];
 
+
+// THere is a template for further  so it's broken at the moment.
         if (order_by.equals("favofurite")) {
 
             movies = new ArrayList<>();
@@ -86,10 +92,8 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                        // But it does make debugging a *lot* easier if you print out the completed
-                        // buffer for debugging.
-                        buffer.append(line + "\n");
+
+                        buffer.append(line);
                     }
 
                     if (buffer.length() == 0) {
@@ -153,14 +157,11 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                 }
                 responseJsonStr = buffer.toString();
 
-                //Log.e("Doinbackground", responseJsonStr);
 
                 movies = MovieDataParser.getMovies(responseJsonStr);
 
             } catch (IOException e) {
                 Log.e("PosterFragment", "Error " + e.getMessage());
-                // If the code didn't successfully get the movie data, there's no point in attemping
-                // to parse it.
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -198,10 +199,20 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    // Toast.makeText(getActivity(), "" + position,
-                    //       Toast.LENGTH_SHORT).show();
+
                     String selectedMovieID = (movies.get(position)).id;
                     Activity activity = (Activity) mContext;
+
+                    // removeAllViews() is not supported in AdapterView
+                    //        at android.widget.AdapterView.removeAllViews(AdapterView.java:545)
+//                    TransitionManager.go(
+//                            Scene.getSceneForLayout(
+//                                    (ViewGroup) activity.findViewById(R.id.movie_grid),
+//                                    R.layout.activity_details,
+//                                    activity
+//
+//                            )
+//                    );
                     Intent intent = new Intent(activity, DetailActivity.class);
                     intent.putExtra("movie", movies.get(position));
                     activity.startActivity(intent);
@@ -209,7 +220,6 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                 }
             });
 
-            //  Log.e("onPostExecute", String.valueOf(movies.size()));
         }
 
 

@@ -29,7 +29,6 @@ public class MovieDataParser {
             e.printStackTrace();
         }
 
-        //Log.e("getMovieByID", m.overview);
         return m;
     }
 

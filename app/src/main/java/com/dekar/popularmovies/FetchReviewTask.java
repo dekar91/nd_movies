@@ -65,10 +65,7 @@ public class FetchReviewTask extends AsyncTask<DetailActivityFragment.ReviewTask
 
             String line;
             while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
+                buffer.append(line);
             }
 
             if (buffer.length() == 0) {
@@ -113,8 +110,6 @@ public class FetchReviewTask extends AsyncTask<DetailActivityFragment.ReviewTask
 
 
         if (selectedMovie.reviews != null) {
-            //ListView reviewListView = (ListView) rootView.findViewById(R.id.reviewList);
-            //reviewListView.setAdapter(reviewAdapter);
 
             LinearLayout reviewsLinearLayout = (LinearLayout) rootView.findViewById(R.id.reviewsLinearLayout);
             for (int i = 0; i < selectedMovie.reviews.size(); i++) {

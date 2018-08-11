@@ -45,15 +45,6 @@ public class ReviewAdapter extends BaseAdapter {
 
     public View createReview(int position)
     {
-        /*TextView textView;
-        textView = new TextView(mContext);
-        //textView.setLayoutParams(new GridView.LayoutParams(540, 200));
-        //textView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        textView.setPadding(0, 0, 0, 0);
-
-        textView.setText(reviews.get(position));
-        // Log.e("getView", String.valueOf(position));
-        return textView;*/
 
         DetailViewHolder holder = new DetailViewHolder();
         holder.reviewTextView = new TextView(mContext);
