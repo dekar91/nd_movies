@@ -1,9 +1,11 @@
 package com.dekar.popularmovies;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewGroupCompat;
 import android.transition.Scene;
@@ -13,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
+
+import com.dekar.popularmovies.provider.MoviesContract;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,6 +49,72 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         return BuildConfig.MOVIE_DB_API_KEY;
     }
 
+
+
+    protected Movie fetchPoster(String movieId)
+    {
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+
+        // Will contain the raw JSON response as a string.
+        String responseJsonStr = null;
+
+        try {
+
+            URL url = new URL("http://api.themoviedb.org/3/movie/"+movieId+"?api_key=" +getMovieDbKey());
+
+            // Create the request to OpenWeatherMap, and open the connection
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            // Read the input stream into a String
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+            if (inputStream == null) {
+                // Nothing to do.
+                return null;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+
+                buffer.append(line);
+            }
+
+            if (buffer.length() == 0) {
+                // Stream was empty.  No point in parsing.
+                return null;
+            }
+            responseJsonStr = buffer.toString();
+
+            //Log.e("Doinbackground", responseJsonStr);
+
+            return MovieDataParser.getMovieByID(movieId, responseJsonStr);
+
+
+        } catch (IOException e) {
+            Log.e("PosterFragment", "Error " + e.getMessage());
+            // If the code didn't successfully get the movie data, there's no point in attemping
+            // to parse it.
+            return null;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    Log.e("PosterFragment", "Error closing stream", e);
+                }
+            }
+        }
+
+
+    }
+
     @Override
     protected ArrayList<Movie> doInBackground(String... params) {
 
@@ -56,75 +127,26 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
 
 // THere is a template for further  so it's broken at the moment.
-        if (order_by.equals("favofurite")) {
+        if (order_by.equals("favourite")) {
 
-            movies = new ArrayList<>();
-            SharedPreferences sp = mContext.getSharedPreferences("pref_general", Context.MODE_PRIVATE);
-            Set<String> retrive_set = new HashSet<String>();
-            retrive_set = sp.getStringSet("favourite", null);
+            ContentResolver resolver = mContext.getContentResolver();
 
-            String[] array = new String[retrive_set.size()];
-            retrive_set.toArray(array);
+            Cursor cursor = resolver.query(MoviesContract.Movies.CONTENT_URI,null,null,null, null);
+            int columnId = cursor.getColumnIndex(MoviesContract.MoviesColumns.MOVIE_ID);
 
-            for (int i = 0; i < array.length; i++) {
-                Log.d("FetchPoster", array[i]);
-            }
-
-            for (int i = 0; i < array.length; i++) {
-                try {
-
-
-                    URL url = new URL("http://api.themoviedb.org/3/movie/"+array[i]+"?api_key=" +getMovieDbKey());
-
-                    // Create the request to OpenWeatherMap, and open the connection
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setRequestMethod("GET");
-                    urlConnection.connect();
-
-                    // Read the input stream into a String
-                    InputStream inputStream = urlConnection.getInputStream();
-                    StringBuffer buffer = new StringBuffer();
-                    if (inputStream == null) {
-                        // Nothing to do.
-                        return null;
-                    }
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-
-                        buffer.append(line);
-                    }
-
-                    if (buffer.length() == 0) {
-                        // Stream was empty.  No point in parsing.
-                        return null;
-                    }
-                    responseJsonStr = buffer.toString();
-
-                    //Log.e("Doinbackground", responseJsonStr);
-
-                    Movie m = MovieDataParser.getMovieByID(array[0], responseJsonStr);
-                    movies.add(m);
-
-                } catch (IOException e) {
-                    Log.e("PosterFragment", "Error " + e.getMessage());
-                    // If the code didn't successfully get the movie data, there's no point in attemping
-                    // to parse it.
-                    return null;
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                    }
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (final IOException e) {
-                            Log.e("PosterFragment", "Error closing stream", e);
-                        }
-                    }
+            if(null != cursor && cursor.getCount() > 0)
+            {
+                while (cursor.moveToNext())
+                {
+                    movies.add(fetchPoster( String.valueOf(cursor.getInt(columnId))));
                 }
+
+            } else {
+                // Unable to start Toast from here
+//                Toast toast = Toast.makeText(mContext, "No favorite movies selected", Toast.LENGTH_SHORT);
+//                toast.show();
             }
+
         }
         else {
             try {

@@ -115,17 +115,20 @@
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/button"
-                        android:layout_width="38dp"
-                        android:layout_height="48dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-
-                        android:elevation="@dimen/fab_elevation"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_margin="16dp"
+                        android:layout_marginBottom="8dp"
 
-                        android:tint="@color/colorIcons"
+                        android:layout_marginStart="8dp"
+                        android:elevation="@dimen/fab_elevation"
+
+                        android:src="@drawable/ic_favorite"
+                        android:tint="#ffffff"
+                        app:rippleColor="@color/favouriteRipple"
+                        app:backgroundTint="@color/colorAccent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"/>
 
                 </android.support.constraint.ConstraintLayout>
 

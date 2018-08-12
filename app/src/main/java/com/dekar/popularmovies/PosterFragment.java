@@ -57,7 +57,12 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateMovies(rootView, posterAdapter);
 
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -72,7 +77,7 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
     public void updateMovies(View rootView, PosterAdapter posterAdapter){
         FetchPosterTask movieTask = new FetchPosterTask(getActivity(), rootView, posterAdapter);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String order_by = prefs.getString(getString(R.string.pref_order_key), "popularity.desc");
+        String order_by = prefs.getString(getString(R.string.pref_order_key), getString(R.string.pref_order_popularity));
         movieTask.execute(order_by);
     }
 

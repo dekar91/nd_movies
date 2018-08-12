@@ -32,5 +32,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2',
             'com.android.support:appcompat-v7:23.0.0',
             'com.android.support:preference-v14:27.1.1',
-            'com.android.support:design:27.1.1'
+            'com.android.support:design:27.1.1',
+            'com.squareup.sqlbrite:sqlbrite:0.2.1'
 }

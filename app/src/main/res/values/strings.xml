@@ -10,8 +10,8 @@
     <string name="pref_order_label_rate" >Ordered by Rate</string>
     <string name="pref_order_label_favourite" translatable="false">Favourites Only</string>
     
-    <string name="pref_order_popularity" translatable="false">popularity.desc</string>
-        <string name="pref_order_rate" translatable="false">vote_average.desc</string>
+    <string name="pref_order_popularity" translatable="false">popular</string>
+        <string name="pref_order_rate" translatable="false">top_rated</string>
     <string name="pref_order_favourite" translatable="false">favourite</string>
     <string name="pref_list_name" translatable="false">Order</string>
 
@@ -22,5 +22,6 @@
     <string name="reviews_label">Reviews:</string>
     <string name="title_label">Title</string>
 
+    <string name="content_authority" translatable="false">com.dekar.popularmovies.provider.MoviesProvider</string>
 
 </resources>

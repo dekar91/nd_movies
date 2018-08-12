@@ -1,18 +1,27 @@
 package com.dekar.popularmovies;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.dekar.popularmovies.provider.MoviesContract;
+import com.dekar.popularmovies.provider.MoviesProvider;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -69,21 +78,24 @@ public class DetailActivityFragment extends Fragment {
 
     public Boolean checkFavouriteByID(String MovieID){
 
-        Set<String> retrive_set = sp.getStringSet("favourite", null);
+        ContentResolver resolver = getContext().getContentResolver();
 
-        if (retrive_set != null) {
-            String[] array = new String[retrive_set.size()];
-            retrive_set.toArray(array);
-
-            if (retrive_set.contains(MovieID)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        else return false;
+        Cursor cursor = resolver.query(MoviesContract.Movies.CONTENT_URI,null,MoviesContract.MoviesColumns.MOVIE_ID  + " = " + MovieID,null, null);
+        return  null != cursor &&  cursor.getCount() > 0;
 
     }
+
+    public void changeColor(FloatingActionButton button, boolean enabled)
+    {
+        if(enabled)
+        {
+            button.setImageResource(R.drawable.ic_favorite);
+        } else {
+            button.setImageResource(R.drawable.favourite_filled);
+        }
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -164,48 +176,53 @@ public class DetailActivityFragment extends Fragment {
 
         final FloatingActionButton button = rootView.findViewById(R.id.button);
 
-        if (checkFavouriteByID(selectedMovie.id)) {
-            // Log.e("onCreateView", "TRUE");
-            button.setBackgroundColor(125);
-        }
-        else
-        {
-            //Log.e("onCreateView", "FALSE");
-            button.setBackgroundColor(255);
-        }
-
+        changeColor(button, checkFavouriteByID(selectedMovie.id));
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (checkFavouriteByID(selectedMovie.id)) {
+                ContentResolver resolver = getContext().getContentResolver();
 
-                    //SharedPreferences sp = getContext().getSharedPreferences("pref_general", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
+                boolean changeColor = checkFavouriteByID(selectedMovie.id);
 
-                    Set<String> set = new HashSet<String>();
-                    set = sp.getStringSet("favourite", null);
-                    set.remove(selectedMovie.id);
-                    editor.putStringSet("favourite", set);
-                    editor.commit();
+                if (changeColor) {
 
-                    Toast.makeText(getContext(), "Unmarked as favourite!", Toast.LENGTH_SHORT).show();
-//                    button.setText("Mark as favourite");
+
+                    resolver.delete(MoviesContract.Movies.CONTENT_URI, MoviesContract.MoviesColumns.MOVIE_ID + " =  " + selectedMovie.id,  null);
+
+                   Toast.makeText(getContext(), "Unmarked as favourite!", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    //SharedPreferences sp = getContext().getSharedPreferences("pref_general", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
+                    ContentValues values = new ContentValues();
+                    values.put(MoviesContract.Movies.MOVIE_ID, selectedMovie.id);
+                    values.put(MoviesContract.Movies.MOVIE_TITLE, selectedMovie.title);
+                    values.put(MoviesContract.Movies.MOVIE_OVERVIEW, selectedMovie.overview);
+                    values.put(MoviesContract.Movies.MOVIE_VOTE_AVERAGE, selectedMovie.vote_average);
+                    values.put(MoviesContract.Movies.MOVIE_RELEASE_DATE, selectedMovie.release_date);
+                    values.put(MoviesContract.Movies.MOVIE_POSTER_PATH, selectedMovie.posterURL);
 
-                    Set<String> set = new HashSet<String>();
-                    set = sp.getStringSet("favourite", null);
-                    set.add(selectedMovie.id);
-                    editor.putStringSet("favourite", set);
-                    editor.commit();
+                    Uri cursor = resolver.insert(MoviesContract.Movies.CONTENT_URI, values);
+
 
                     Toast.makeText(getContext(), "Marked as favourite!", Toast.LENGTH_SHORT).show();
 //                    button.setText("Unmark as favourite");
                 }
+
+                String s  = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(
+                        getString(R.string.pref_order_key),
+                        getString(R.string.pref_order_popularity)
+                );
+
+                if(s.equals(getString(R.string.pref_order_favourite)))
+                {
+                    new GetMovie().execute(s);
+//                    new PosterFragment().updateMovies();
+                }
+
+                changeColor(button, checkFavouriteByID(selectedMovie.id));
+
+
 
             }
         });

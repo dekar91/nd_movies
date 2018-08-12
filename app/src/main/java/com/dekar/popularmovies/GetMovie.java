@@ -28,15 +28,15 @@ public class GetMovie extends AsyncTask<String, Void, String> {
 
         switch (order)
         {
-            case "vote_average":
+            case "top_rated":
                 urlString += "top_rated";
                 break;
             case "favorite":
                 urlString += "top_rated";
                 break;
-            case "popularity.desc":
+            case "popular":
                 default:
-                    urlString += "top_rated";
+                    urlString += "popular";
                     break;
         }
         
