@@ -3,14 +3,17 @@ package com.dekar.popularmovies;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     private String order = null;
+    private static int scrollPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +22,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setupPreferences();
         new GetMovie().execute(order);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override

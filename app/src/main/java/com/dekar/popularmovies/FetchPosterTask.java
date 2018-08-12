@@ -4,18 +4,12 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.v4.view.ViewGroupCompat;
-import android.transition.Scene;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.dekar.popularmovies.provider.MoviesContract;
 
@@ -26,8 +20,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
@@ -141,6 +133,8 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                     movies.add(fetchPoster( String.valueOf(cursor.getInt(columnId))));
                 }
 
+                cursor.close();
+
             } else {
                 // Unable to start Toast from here
 //                Toast toast = Toast.makeText(mContext, "No favorite movies selected", Toast.LENGTH_SHORT);
@@ -152,7 +146,7 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             try {
 
 
-                URL url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=" + order_by + "&api_key=" + getMovieDbKey());
+                URL url = new URL("http://api.themoviedb.org/3/movie/" + order_by + "?api_key=" + getMovieDbKey());
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();

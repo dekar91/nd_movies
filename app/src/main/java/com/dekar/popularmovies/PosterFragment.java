@@ -8,13 +8,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -24,6 +21,7 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
 
     private PosterAdapter posterAdapter;
     private View rootView;
+    private int scrollPosition;
     ArrayList<Movie> movies = new ArrayList<>();
 
 
@@ -45,8 +43,14 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
         PreferenceManager.getDefaultSharedPreferences(this.getActivity()).registerOnSharedPreferenceChangeListener(this);
+
+        if(scrollPosition > 0){
+            GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+            t.smoothScrollToPosition(scrollPosition);
+        }
 
     }
 
@@ -55,6 +59,18 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
 
         outState.putParcelableArrayList("movies", movies);
         super.onSaveInstanceState(outState);
+
+        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+        scrollPosition = t.getFirstVisiblePosition();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+        scrollPosition = t.getFirstVisiblePosition();
+
     }
 
     @Override
@@ -62,6 +78,10 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
         super.onResume();
         updateMovies(rootView, posterAdapter);
 
+        if(scrollPosition > 0){
+            GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+            t.smoothScrollToPosition(scrollPosition);
+        }
     }
 
     @Override
