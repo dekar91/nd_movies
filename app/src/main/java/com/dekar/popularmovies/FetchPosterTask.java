@@ -216,6 +216,7 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
 
+                    PosterFragment.scrollPosition = position;
                     String selectedMovieID = (movies.get(position)).id;
                     Activity activity = (Activity) mContext;
 
@@ -235,6 +236,9 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
                 }
             });
+
+            if(PosterFragment.scrollPosition > 0)
+                gridView.smoothScrollToPosition(PosterFragment.scrollPosition);
 
         }
 

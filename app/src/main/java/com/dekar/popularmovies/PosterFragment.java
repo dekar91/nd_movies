@@ -21,7 +21,7 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
 
     private PosterAdapter posterAdapter;
     private View rootView;
-    private int scrollPosition;
+    public static int scrollPosition;
     ArrayList<Movie> movies = new ArrayList<>();
 
 
@@ -60,16 +60,16 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
         outState.putParcelableArrayList("movies", movies);
         super.onSaveInstanceState(outState);
 
-        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
-        scrollPosition = t.getFirstVisiblePosition();
+//        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+//        scrollPosition = t.getFirstVisiblePosition();
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
-        scrollPosition = t.getFirstVisiblePosition();
+//        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+//        scrollPosition = t.getFirstVisiblePosition();
 
     }
 
@@ -99,6 +99,11 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String order_by = prefs.getString(getString(R.string.pref_order_key), getString(R.string.pref_order_popularity));
         movieTask.execute(order_by);
+
+        if(scrollPosition > 0){
+            GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+            t.smoothScrollToPosition(scrollPosition);
+        }
     }
 
     @Override
@@ -123,6 +128,10 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
                 updateMovies(rootView, posterAdapter);
         }
 
+        if(scrollPosition > 0){
+            GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+            t.smoothScrollToPosition(scrollPosition);
+        }
 
         return rootView;
     }
