@@ -135,12 +135,7 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
                 cursor.close();
 
-            } else {
-                // Unable to start Toast from here
-//                Toast toast = Toast.makeText(mContext, "No favorite movies selected", Toast.LENGTH_SHORT);
-//                toast.show();
             }
-
         }
         else {
             try {
@@ -220,7 +215,7 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                     String selectedMovieID = (movies.get(position)).id;
                     Activity activity = (Activity) mContext;
 
-                    // removeAllViews() is not supported in AdapterView
+                    // removeAllViews() is not supported in AdapterView. HOW TO implement this ??
                     //        at android.widget.AdapterView.removeAllViews(AdapterView.java:545)
 //                    TransitionManager.go(
 //                            Scene.getSceneForLayout(
@@ -237,11 +232,11 @@ public class FetchPosterTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                 }
             });
 
+            // I understand that here is magic constant, but I have no idea why it scrolls incorrectly
             if(PosterFragment.scrollPosition > 0)
-                gridView.smoothScrollToPosition(PosterFragment.scrollPosition);
+                gridView.smoothScrollToPosition(PosterFragment.scrollPosition +2);
 
         }
-
 
         super.onPostExecute(result);
     }

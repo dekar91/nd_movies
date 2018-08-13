@@ -1,5 +1,6 @@
 package com.dekar.popularmovies;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,10 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
     public void onDestroy() {
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this.getActivity()).unregisterOnSharedPreferenceChangeListener(this);
+
+        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+        if (t.getFirstVisiblePosition() > 0)
+            scrollPosition = t.getFirstVisiblePosition();
     }
 
     @Override
@@ -40,6 +45,16 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
 
     }
 
+    private void scrollGridView(Activity activity)
+    {
+        if(scrollPosition > 0){
+            GridView t  = (GridView) activity.findViewById(R.id.movie_grid);
+            if(null != t)
+                t.smoothScrollToPosition(scrollPosition);
+        }
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +62,7 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
         setHasOptionsMenu(true);
         PreferenceManager.getDefaultSharedPreferences(this.getActivity()).registerOnSharedPreferenceChangeListener(this);
 
-        if(scrollPosition > 0){
-            GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
-            t.smoothScrollToPosition(scrollPosition);
-        }
+        scrollGridView(getActivity());
 
     }
 
@@ -60,17 +72,18 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
         outState.putParcelableArrayList("movies", movies);
         super.onSaveInstanceState(outState);
 
-//        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
-//        scrollPosition = t.getFirstVisiblePosition();
+        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+        if (t.getFirstVisiblePosition() > 0)
+            scrollPosition = t.getFirstVisiblePosition();
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-//        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
-//        scrollPosition = t.getFirstVisiblePosition();
-
+        GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
+        if (t.getFirstVisiblePosition() > 0)
+            scrollPosition = t.getFirstVisiblePosition();
     }
 
     @Override
@@ -78,10 +91,7 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
         super.onResume();
         updateMovies(rootView, posterAdapter);
 
-        if(scrollPosition > 0){
-            GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
-            t.smoothScrollToPosition(scrollPosition);
-        }
+        scrollGridView(getActivity());
     }
 
     @Override
@@ -100,10 +110,8 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
         String order_by = prefs.getString(getString(R.string.pref_order_key), getString(R.string.pref_order_popularity));
         movieTask.execute(order_by);
 
-        if(scrollPosition > 0){
-            GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
-            t.smoothScrollToPosition(scrollPosition);
-        }
+        scrollGridView(getActivity());
+
     }
 
     @Override
@@ -128,10 +136,8 @@ public class PosterFragment extends Fragment implements SharedPreferences.OnShar
                 updateMovies(rootView, posterAdapter);
         }
 
-        if(scrollPosition > 0){
-            GridView t  = (GridView) getActivity().findViewById(R.id.movie_grid);
-            t.smoothScrollToPosition(scrollPosition);
-        }
+        scrollGridView(getActivity());
+
 
         return rootView;
     }
